@@ -1,0 +1,35 @@
+spring:
+  profiles:
+    active:
+    - local
+  batch:
+    job:
+      names: ${job.name:NONE}  output:    ansi:      enabled: always
+---
+spring:  profiles: local
+  datasource:    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+---
+spring:
+  profiles: postgres
+  datasource:
+    postgresql:
+      hikari:
+        jdbc-url: jdbc:postgresql://localhost:5432/spring_batch?sslmode=disable
+        username: npcdja
+        password: 1234
+        driver-class-name: org.postgresql.Driver
+    mysql:
+      hikari: 
+        jdbc-url: jdbc:mysql://localhost:3306/springboot?useSSL=false
+        username: npcdja
+        password: 1234
+        driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc.lob.non_contextual_creation: true
+  main:    allow-bean-definition-overriding: true
